@@ -13,7 +13,7 @@
 	<head>
 		<meta charset="utf-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1"/>
-<!--		<link rel="stylesheet" href="style.css"/> -->
+  	<link rel="stylesheet" href="./bayes.css"/>
 
   <!-- include Mithril: -->
   <script src="https://unpkg.com/mithril/mithril.js"></script>
@@ -21,14 +21,20 @@
 		<title>Bayes Probability Calculator</title>
 	</head>
 
-
+	<style>
+	#hiWill {
+		height: 5rem;
+		width:  5rem;
+		background-color: #ffff00;
+		visibility: hidden;
+	}
+	</style>
 
 	<body>
     <!-- Mithril stuff here: -->
       <script>
 
         var root  = document.body
-        m.render(root, m("h1", "Emily Meuer"))
 
         var count		= 0
 				var	result	= 0;
@@ -106,7 +112,7 @@
 
 				var HiWill = {
 					view: function() {
-						return	m("div", {id: "hiWill"}, "Hi, Will!")
+						return	m("div", {id: "hiWill", style: "visibility:visible;"}, "Hi, Will!")
 					}
 				} // HiWill
 				var	hiWill	= document.getElementById("hiWill")
