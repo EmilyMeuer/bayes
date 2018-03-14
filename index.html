@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+
+<!--
+  Emily Meuer
+  Mar. 13, 2018
+
+  Bayes Theorom calculator for disk drive probabilities
+  (plus learning Mithril)
+
+-->
+
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!--		<link rel="stylesheet" href="style.css"/> -->
+
+  <!-- include Mithril: -->
+  <script src="https://unpkg.com/mithril/mithril.js"></script>
+    <!--		<script type="text/javascript" src="bayes.js"></script> -->
+		<title>Bayes Probability Calculator</title>
+	</head>
+
+
+
+	<body>
+    <!-- Mithril stuff here: -->
+      <script>
+
+        var root  = document.body
+        m.render(root, m("h1", "Emily Meuer"))
+
+        var count		= 0
+				var	result	= 0;
+				var	globalDiskSize	= 1.5;
+
+        var Component = {
+					controller: function() {
+						this.curSize	= 3
+					}, // controller
+
+          view: function(ctrl) {
+						let	diskSize	= m("input", {
+							onkeyup: function(vnode) {
+								globalDiskSize	= vnode.target.value
+							}
+						})
+
+            return m("main", [
+              m("h1", {class: "title"}, "Bayes' Probability Calculator"),
+	              m("div", "Calculate probable disk failure given size in TB:"),
+							diskSize,
+							m("button", {onclick: buttonClicked}, "Calculate updated failure rate"),
+							m("div", {id: "percentFailed"}),
+							m("div", {id: "percentNotFailed"}),
+							m("br"),
+							m("div", {id: "result"}),
+							m("div", {id: "hiWill"})
+            ])
+          } // view
+        } // Component
+
+				function buttonClicked() {
+					var	percentFailed			= -1;
+					var	percentNotFailed	= -1;
+					var priorProb	= 0.123;
+					var result;
+
+					if(globalDiskSize == 1) {
+						percentFailed			= 0.02
+						percentNotFailed	= 0.04
+					} else if(globalDiskSize == 1.5) {
+						percentFailed			= 0.26
+						percentNotFailed	= 0.12
+					} else if(globalDiskSize == 2) {
+						percentFailed			= 0.1
+						percentNotFailed	= 0.27
+					} else if(globalDiskSize == 3) {
+						percentFailed			= 0.6
+						percentNotFailed	= 0.5
+					} else if(globalDiskSize == 4) {
+						percentFailed			= 0.02
+						percentNotFailed	= 0.07
+					} else {
+						window.alert(globalDiskSize + " is not a valid disk size value.")
+					}
+
+					// Do the check if presented with a valid number:
+					if(percentFailed >= 0 && percentNotFailed >= 0) {
+						m.render(document.getElementById("percentFailed"), "Percent failed: " + percentFailed)
+						m.render(document.getElementById("percentNotFailed"), "Percent not failed: " + percentNotFailed)
+					}
+
+						// P(B): Prior probability (0.123)
+						// P(B^c): 1 - prior
+						// P(A): percentFailed
+						// P(A^c): percentNotFailed
+						// or -- is P(A|B) the chance that a drive will be this size?
+
+					result	= (percentFailed * priorProb) / ((percentFailed * priorProb) + (percentNotFailed * priorProb))
+					m.render(document.getElementById("result"), "Updated failure rate: " + result)
+				} // buttonClicked
+
+
+				m.mount(root, Component)
+
+				var HiWill = {
+					view: function() {
+						return	m("div", {id: "hiWill"}, "Hi, Will!")
+					}
+				} // HiWill
+				var	hiWill	= document.getElementById("hiWill")
+
+        // Continue tutorial from routing
+
+      </script>
+	</body>
+</html>
