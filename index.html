@@ -97,7 +97,7 @@
 						// P(A^c): percentNotFailed
 						// or -- is P(A|B) the chance that a drive will be this size?
 
-					result	= (percentFailed * priorProb) / ((percentFailed * priorProb) + (percentNotFailed * priorProb))
+					result	= (percentFailed * priorProb) / ((percentFailed * priorProb) + (percentNotFailed * (1-priorProb)))
 					m.render(document.getElementById("result"), "Updated failure rate: " + result)
 				} // buttonClicked
 
